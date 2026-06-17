@@ -1,0 +1,8 @@
+问题根源说明
+问题的根源是：
+
+初始化时使用USD的 get_world_transform_matrix() 获取case姿态来计算offset
+运行时使用PhysX的 get_link_transforms() 获取case姿态来应用变换
+这两个姿态不同（USD中是静态初始姿态，PhysX中机器人已初始化到运行姿态）
+当用不同的四元数计算和应用offset时，产生Z轴反转
+当前的Z轴反转是一个临时修复。更完整的解决方案应该是在PhysX初始化后重新计算offset，但这需要确保attachment点的世界坐标也在PhysX空间中正确。
