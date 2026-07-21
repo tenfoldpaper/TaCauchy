@@ -24,7 +24,8 @@ See **[REPRODUCTION.md](REPRODUCTION.md)** for the full installation and reprodu
 git clone --recurse-submodules https://github.com/figsama/TaCauchy.git
 cd TaCauchy
 git lfs install
-./scripts/setup_assets.sh          # download sensor USD / calibration assets
+./scripts/setup_assets.sh          # pull and verify Git LFS assets
+./scripts/setup_libuipc_patches.sh # apply TaCauchy's local libuipc changes
 conda activate env_isaaclab        # after Isaac Sim + Isaac Lab setup
 ./tacex.sh -i
 pip install -e source/tacex_uipc -v
@@ -37,7 +38,7 @@ python scripts/demos/shape_touch/simple_tactile_demo.py --sensor gelsight
 |------|-------------|
 | `source/tacex/` | VBTS sensor abstraction and optical simulators |
 | `source/tacex_uipc/` | UIPC FEM integration, stress/contact extraction, mesh generation |
-| `source/tacex_assets/` | Sensor and robot configuration (USD assets via `setup_assets.sh`) |
+| `source/tacex_assets/` | Sensor and robot configuration plus Git LFS USD/calibration assets |
 | `source/tacex_tasks/` | Isaac Lab RL environments |
 | `scripts/demos/shape_touch/` | **Main TaCauchy demos** — force-field visualization and benchmarks |
 | `docs/ARCHITECTURE_CN.md` | Code architecture notes (Chinese) |

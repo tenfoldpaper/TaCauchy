@@ -234,7 +234,7 @@ html_last_updated_fmt = ""  # to reveal the build date in the pages meta
 html_theme_options = {
     "path_to_docs": "docs/",
     "collapse_navigation": True,
-    "repository_url": "https://github.com/DH-Ng/TacEx",
+    "repository_url": "https://github.com/figsama/TaCauchy",
     "use_repository_button": True,
     "use_issues_button": True,
     "use_edit_page_button": True,
@@ -248,7 +248,7 @@ html_theme_options = {
     "icon_links": [
         {
             "name": "GitHub",
-            "url": "https://github.com/DH-Ng/TacEx",
+            "url": "https://github.com/figsama/TaCauchy",
             "icon": "fa-brands fa-square-github",
             "type": "fontawesome",
         },

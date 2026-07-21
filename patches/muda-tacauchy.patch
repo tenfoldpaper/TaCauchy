@@ -1,0 +1,40 @@
+diff --git a/src/muda/atomic.h b/src/muda/atomic.h
+index 275439e..f6d5c95 100644
+--- a/src/muda/atomic.h
++++ b/src/muda/atomic.h
+@@ -1,5 +1,6 @@
+ #pragma once
+ #include <device_atomic_functions.h>
++#include <cuda_runtime.h>
+ namespace muda
+ {
+ template <typename T>
+@@ -8,12 +9,28 @@ __forceinline__ __device__ T atomic_cas(T* address, T compare, T val)
+     return atomicCAS(address, compare, val);
+ }
+ 
++// Declare the generic template first
+ template <typename T>
+ __forceinline__ __device__ T atomic_add(T* address, T val)
+ {
+     return atomicAdd(address, val);
+ }
+ 
++// Specialization for double type
++// Use atomicCAS-based implementation for reliable cross-platform support
++template <>
++__forceinline__ __device__ double atomic_add<double>(double* address, double val)
++{
++    unsigned long long int* address_as_ull = reinterpret_cast<unsigned long long int*>(address);
++    unsigned long long int old = *address_as_ull, assumed;
++    do {
++        assumed = old;
++        old = atomicCAS(address_as_ull, assumed,
++                       __double_as_longlong(val + __longlong_as_double(assumed)));
++    } while (assumed != old);
++    return __longlong_as_double(old);
++}
++
+ template <typename T>
+ __forceinline__ __device__ T atomic_sub(T* address, T val)
+ {

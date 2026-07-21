@@ -54,8 +54,10 @@ python scripts/reinforcement_learning/rsl_rl/train.py --task=Isaac-Ant-v0 --head
 ```bash
 # Need it for the USD assets
 git lfs install
-git clone --recurse-submodules https://github.com/DH-Ng/TacEx.git
-cd TacEx
+git clone --recurse-submodules https://github.com/figsama/TaCauchy.git
+cd TaCauchy
+./scripts/setup_assets.sh
+./scripts/setup_libuipc_patches.sh
 ```
 **1.** Activate the Isaac Env
 ```bash

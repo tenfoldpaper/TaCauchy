@@ -21,6 +21,8 @@
 git lfs install
 git clone --recurse-submodules https://github.com/figsama/TaCauchy.git
 cd TaCauchy
+./scripts/setup_assets.sh
+./scripts/setup_libuipc_patches.sh
 ```
 
 若已克隆但未拉取子模块：
@@ -29,19 +31,27 @@ cd TaCauchy
 git submodule update --init --recursive
 ```
 
-## 3. 下载传感器资产（必需）
+## 3. 拉取并检查传感器资产（必需）
 
-本仓库仅包含**源代码**；USD 模型、校准 `dataPack.npz` 等大文件被 `.gitignore` 排除（见 [ASSETS.md](ASSETS.md)）。
-
-运行资产安装脚本（从上游 [TacEx](https://github.com/DH-Ng/TacEx) 通过 Git LFS 拉取）：
+本仓库通过 **Git LFS** 管理 USD 模型、校准 `dataPack.npz`、纹理和策略文件（见 [ASSETS.md](ASSETS.md)）。普通 `git clone` 可能只得到 LFS pointer，因此运行演示前请执行：
 
 ```bash
 ./scripts/setup_assets.sh
 ```
 
-脚本会将资产写入 `source/tacex_assets/tacex_assets/data/`。若网络受限，可手动克隆 TacEx 并复制该目录。
+该脚本会拉取 `source/tacex_assets/tacex_assets/data/` 下的 LFS 文件，并检查 GelSight Mini、DIGIT、9DTact、Franka adapter 和测试物体是否齐全。
 
-## 4. 安装 Isaac Sim 5.0 与 Isaac Lab 2.2.1
+## 4. 应用 TaCauchy 的 libuipc 本地补丁（必需）
+
+`source/tacex_uipc/libuipc` 固定到可公开克隆的 `DH-Ng/libuipc@837808a361398f18e9526e36a0764b1ec0b741ac`，TaCauchy 额外需要的 Cauchy stress / CUDA 兼容性改动保存在 `patches/`：
+
+```bash
+./scripts/setup_libuipc_patches.sh
+```
+
+该脚本会初始化子模块并把 `patches/libuipc-tacauchy.patch` 与 `patches/muda-tacauchy.patch` 应用到本地子模块。若已应用，脚本会自动跳过。
+
+## 5. 安装 Isaac Sim 5.0 与 Isaac Lab 2.2.1
 
 ```bash
 conda create -n env_isaaclab python=3.11
@@ -74,7 +84,7 @@ conda activate env_isaaclab
 python IsaacLab/scripts/reinforcement_learning/rsl_rl/train.py --task=Isaac-Ant-v0 --headless
 ```
 
-## 5. 安装 TaCauchy 核心包
+## 6. 安装 TaCauchy 核心包
 
 ```bash
 cd TaCauchy
@@ -84,7 +94,7 @@ conda activate env_isaaclab
 ./tacex.sh -i
 ```
 
-## 6. 编译安装 UIPC 扩展（TaCauchy 核心）
+## 7. 编译安装 UIPC 扩展（TaCauchy 核心）
 
 UIPC 需要 vcpkg 与 CUDA。首次编译请参考 [docs/source/installation/Local-Installation.md](docs/source/installation/Local-Installation.md) 中的 UIPC 章节。
 
@@ -96,21 +106,24 @@ git clone https://github.com/microsoft/vcpkg.git ~/vcpkg
 ~/vcpkg/bootstrap-vcpkg.sh
 export CMAKE_TOOLCHAIN_FILE="$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake"
 
-# 2) 安装 libuipc 构建依赖
+# 2) 确保 TaCauchy 的 libuipc 补丁已应用
+./scripts/setup_libuipc_patches.sh
+
+# 3) 安装 libuipc 构建依赖
 conda env update -n env_isaaclab --file source/tacex_uipc/libuipc/conda/env.yaml
 
-# 3) 按 GPU 架构设置 CUDA（示例：RTX 4090/5090 为 89）
+# 4) 按 GPU 架构设置 CUDA（示例：RTX 4090/5090 为 89）
 export CMAKE_CUDA_ARCHITECTURES=89
 
-# 4) 可编辑安装 tacex_uipc（会编译 libuipc C++ 扩展）
+# 5) 可编辑安装 tacex_uipc（会编译 libuipc C++ 扩展）
 pip install -e source/tacex_uipc -v
 ```
 
 > 编译耗时较长（首次约 10–30 分钟，视机器而定）。若失败，请检查 GCC 版本、vcpkg 路径与 CUDA 架构号。
 
-## 7. 复现核心演示
+## 8. 复现核心演示
 
-### 7.1 精简力场 + 触觉 RGB 演示（推荐入口）
+### 8.1 精简力场 + 触觉 RGB 演示（推荐入口）
 
 ```bash
 conda activate env_isaaclab
@@ -133,25 +146,25 @@ python scripts/demos/shape_touch/simple_tactile_demo.py --sensor 9dtact
 
 详见 [scripts/demos/shape_touch/SIMPLE_DEMO_README.md](scripts/demos/shape_touch/SIMPLE_DEMO_README.md)。
 
-### 7.2 完整模块化力场可视化
+### 8.2 完整模块化力场可视化
 
 ```bash
 python scripts/demos/shape_touch/contact_force_visualization_demo_modular.py
 ```
 
-### 7.3 性能基准（无 GUI）
+### 8.3 性能基准（无 GUI）
 
 ```bash
 python scripts/demos/shape_touch/benchmark_tactile_performance.py --sensor gelsight --headless
 ```
 
-### 7.4 Taxim 光学仿真验证（不含 UIPC 应力）
+### 8.4 Taxim 光学仿真验证（不含 UIPC 应力）
 
 ```bash
 python scripts/demos/tactile_sim_approaches/check_taxim_sim.py --debug_vis
 ```
 
-### 7.5 RL 任务示例
+### 8.5 RL 任务示例
 
 ```bash
 python scripts/reinforcement_learning/skrl/train.py \
@@ -159,7 +172,7 @@ python scripts/reinforcement_learning/skrl/train.py \
   --num_envs 1 --enable_cameras
 ```
 
-## 8. 论文对应模块
+## 9. 论文对应模块
 
 | 论文概念 | 代码位置 |
 |----------|----------|
@@ -173,11 +186,11 @@ python scripts/reinforcement_learning/skrl/train.py \
 
 更完整的架构说明见 [docs/ARCHITECTURE_CN.md](docs/ARCHITECTURE_CN.md)。
 
-## 9. 常见问题
+## 10. 常见问题
 
 ### Q: 启动时报找不到 USD 资产
 
-运行 `./scripts/setup_assets.sh`，或确认 `source/tacex_assets/tacex_assets/data/` 下存在传感器与机器人模型。
+运行 `./scripts/setup_assets.sh`，或确认 `source/tacex_assets/tacex_assets/data/` 下存在传感器与机器人模型，且文件不是 Git LFS pointer。
 
 ### Q: `pip install -e source/tacex_uipc` 编译失败
 
@@ -193,7 +206,11 @@ python scripts/reinforcement_learning/skrl/train.py \
 
 参考 [docs/source/tutorials/QUICK_START_ISAAC_SIM_5.md](docs/source/tutorials/QUICK_START_ISAAC_SIM_5.md) 启用所需扩展。
 
-## 10. Docker 部署（可选）
+### Q: `libuipc` 编译后没有 Cauchy stress / force field 输出
+
+确认已经运行 `./scripts/setup_libuipc_patches.sh`，并在应用补丁后重新执行 `pip install -e source/tacex_uipc -v`。
+
+## 11. Docker 部署（可选）
 
 ```bash
 # 见 docs/source/installation/Docker-Container-Setup.md

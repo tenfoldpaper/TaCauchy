@@ -1,111 +1,124 @@
-# Omniverse
+# Omniverse / Isaac generated files
 **/*.dmp
 **/.thumbs
+_isaac_sim*
+_isaac_lab*
+_isaaclab
+_repo
+_build
+.lastformat
+**/*/.container.cfg
+NvStreamer*
 
 # Python
 .DS_Store
+.venv/
 **/*.egg-info/
 **/__pycache__/
 **/.pytest_cache/
 **/*.pyc
 **/*.pb
 
-# IDE
+# IDE / local agent state
 **/.idea/
 **/.vscode/
-# Don't ignore the top-level .vscode directory as it is
-# used to configure VS Code settings
-!.vscode
+!.vscode/
+!.vscode/.gitignore
+!.vscode/tools/
+!.vscode/tools/**
+!.vscode/extensions.json
+!.vscode/tasks.json
+.cursor/
+.codex
+.kiro/
 
-# Environment variables
+# Environment variables and local credentials
 .env
 .env.local
 
-# Outputs
-**/runs/*
-**/logs/*
-**/recordings/*
-**/output/*
-**/outputs/*
-**/videos/*
-**/wandb/*
-**/.neptune/*
+# Build outputs
+build/
+CMakeBuild/
+source/tacex_uipc/build/
+source/tacex_uipc/libuipc/build/
+source/tacex_uipc/libuipc/output/
+source/tacex_uipc/libuipc/artifacts/
+**/CMakeFiles/
+**/cmake-build-*/
+**/*.so
+**/*.a
+
+# Runtime outputs
+runs/
+logs/
+recordings/
+output/
+outputs/
+videos/
+wandb/
+.neptune/
+**/runs/
+**/logs/
+**/recordings/
+**/output/
+**/outputs/
+**/videos/
+**/wandb/
+**/.neptune/
 docker/artifacts/
 *.tmp
+*.log
+dump/
+dumps/
+__tracked_surface.stl
+systems.json
+.cache/
 
-# Doc Outputs
+# Documentation outputs
 **/docs/_build/*
 **/generated/*
 
-# Isaac-Sim packman
-_isaac_sim*
-_repo
-_build
-.lastformat
+# Local duplicate/checkpoint workspaces
+TacEx/
+source/home/
+~/
+sanity_check/
+experimental/
 
-_isaac_lab*
-_isaaclab
+# Local experiment data and reports
+9dtact_calibration_images/
+IROS_zhf/
+IROS_zhf.zip
+IROS2026_论文信息总结.md
+TRIAL_SIM_MATCHING_SUMMARY.md
+tactile_data/
+tactile_images/
+tactile_comparisons/
+**/tactile_data_*/
+tactile_comparison_results.json
+tactile_similarity_*
+trial_sim_*
+analyze_mesh_refinement.py
+patch_env.py
+test_detailed_mesh_output.py
+test_mesh_refinement_comparison.py
+tools/test_settings.py
+primvars_st.npy
+source/tacex_uipc/tacex_uipc/offline/
 
-**/*/.container.cfg
-
-# from tacex_uipc
-build
-CMakeBuild
-__tracked_surface.stl
-dump
-dumps
-systems.json
-
-.cache/
-
-NvStreamer*
-
-# Tests
+# Tests generated outside the source tree
 tests/
 
-# Docker history
-.isaac-lab-docker-history
-
-# Backup files
-**/*.backup
-**/*.backup2
+# Backup / scratch files
+**/*backup*
+**/*copy*
+**/*.broken
+**/*.before_*
 **/*.backup_before_clean
 
-# Tactile data
-**/tactile_data_*/
-
-# Large binary files
-**/*.so
-**/*.a
+# Compressed archives are generated from tracked assets when needed.
 **/*.zip
 
-# Extremely large USD files (>100MB - GitHub limit)
-**/digit/Sensor.usd
-**/digit/Case.usd
-
-# Large USD and calibration files (>20MB)
-**/Gelpad_extremly_high_res.usd
-**/dataPack.npz
-
-# Large gelpad USD files (>40MB)
-**/physx_soft_gelpad.usd
-**/physx_rigid_gelpad.usd
-**/uipc_textured_gelpad.usd
-**/uipc_gelpad.usda
-
-# All model and asset files - only keep code
-**/*.usd
-**/*.usda
-**/*.obj
-**/*.mtl
-**/*.stl
-**/*.dae
-**/*.msh
-**/*.png
-**/*.jpg
-**/*.jpeg
-**/*.npz
-**/*.npy
-**/*.pt
-**/*.pth
-**/*.urdf
+# Runtime assets under source/tacex_assets/tacex_assets/data are intentionally
+# tracked via Git LFS. Do not add broad ignores for USD/NPZ/PNG/OBJ/STL here.
+source/tacex_assets/tacex_assets/data/.vscode/
