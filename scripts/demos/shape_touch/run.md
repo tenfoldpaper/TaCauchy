@@ -1,1 +1,0 @@
-conda activate tacex && cd /home/ly/data/hengfei/Chemistry_with_sensor/TacEx_original && python scripts/demos/shape_touch/run_shape_touch.py --num_envs 1 --debug_vis --sensor_type gsmini

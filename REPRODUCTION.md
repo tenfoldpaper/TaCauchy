@@ -144,7 +144,7 @@ python scripts/demos/shape_touch/simple_tactile_demo.py --sensor 9dtact
 - 窗口显示：点状法向/切向力、20×20 插值力场、触觉 RGB 图像
 - 点击触觉图像窗口可保存 PNG 到 `tactile_images/`
 
-详见 [scripts/demos/shape_touch/SIMPLE_DEMO_README.md](scripts/demos/shape_touch/SIMPLE_DEMO_README.md)。
+如需保存触觉图像，点击触觉图像窗口即可写入 `tactile_images/`。
 
 ### 8.2 完整模块化力场可视化
 
@@ -184,8 +184,6 @@ python scripts/reinforcement_learning/skrl/train.py \
 | 力场可视化 | `source/tacex_uipc/tacex_uipc/utils/visualization/` |
 | 主演示脚本 | `scripts/demos/shape_touch/` |
 
-更完整的架构说明见 [docs/ARCHITECTURE_CN.md](docs/ARCHITECTURE_CN.md)。
-
 ## 10. 常见问题
 
 ### Q: 启动时报找不到 USD 资产
@@ -204,18 +202,10 @@ python scripts/reinforcement_learning/skrl/train.py \
 
 ### Q: Isaac Sim 扩展未加载
 
-参考 [docs/source/tutorials/QUICK_START_ISAAC_SIM_5.md](docs/source/tutorials/QUICK_START_ISAAC_SIM_5.md) 启用所需扩展。
+确认 Isaac Sim / Isaac Lab 版本与本文档一致，并在 Isaac Sim Extension Manager 中启用 TaCauchy 相关扩展。
 
 ### Q: `libuipc` 编译后没有 Cauchy stress / force field 输出
 
 确认已经运行 `./scripts/setup_libuipc_patches.sh`，并在应用补丁后重新执行 `pip install -e source/tacex_uipc -v`。
-
-## 11. Docker 部署（可选）
-
-```bash
-# 见 docs/source/installation/Docker-Container-Setup.md
-```
-
----
 
 如有问题，请在 GitHub Issues 中反馈，并附上 GPU 型号、Isaac Sim/Lab 版本与完整报错日志。

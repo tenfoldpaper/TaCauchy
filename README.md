@@ -7,7 +7,7 @@
 
 **TaCauchy** is an extensible finite-element framework for vision-based tactile simulation, built on [Isaac Sim / Isaac Lab](https://isaac-sim.github.io/IsaacLab) and [UIPC](https://github.com/spiriMirror/libuipc). It extends the [TacEx](https://github.com/DH-Ng/TacEx) codebase with **direct Cauchy stress extraction**, **contact traction recovery**, **adaptive mesh refinement**, and **multi-sensor support** (GelSight Mini, DIGIT, 9DTact).
 
-> Paper: *TaCauchy: An Extensible FEM Framework for Vision-Based Tactile Simulation* — accepted at **IROS 2026**.
+> Paper: *TaCauchy: An Extensible FEM Framework for Vision-Based Tactile Simulation* — accepted at **IROS 2026**. arXiv: [2606.20426](https://arxiv.org/abs/2606.20426).
 
 ## Highlights
 
@@ -41,7 +41,6 @@ python scripts/demos/shape_touch/simple_tactile_demo.py --sensor gelsight
 | `source/tacex_assets/` | Sensor and robot configuration plus Git LFS USD/calibration assets |
 | `source/tacex_tasks/` | Isaac Lab RL environments |
 | `scripts/demos/shape_touch/` | **Main TaCauchy demos** — force-field visualization and benchmarks |
-| `docs/ARCHITECTURE_CN.md` | Code architecture notes (Chinese) |
 
 ## Main Demos
 
@@ -63,19 +62,21 @@ Sensor options: `--sensor gelsight | digit | 9dtact`
 - [REPRODUCTION.md](REPRODUCTION.md) — installation & reproduction
 - [ASSETS.md](ASSETS.md) — large binary assets policy
 - [docs/source/installation/Local-Installation.md](docs/source/installation/Local-Installation.md) — detailed TacEx/UIPC install
-- [MESH_REFINEMENT_PLUGIN_GUIDE.md](MESH_REFINEMENT_PLUGIN_GUIDE.md) — adaptive mesh refinement
-- [TACTILE_VISUALIZATION_GUIDE.md](TACTILE_VISUALIZATION_GUIDE.md) — force-field visualization
 
 ## Citation
 
 If you use TaCauchy, please cite our paper (IROS 2026) and acknowledge TacEx:
 
 ```bibtex
-@inproceedings{tacauchy2026,
+@inproceedings{zhao2026tacauchy,
   title     = {TaCauchy: An Extensible FEM Framework for Vision-Based Tactile Simulation},
-  author    = {},  % fill in from the published paper
+  author    = {Hengfei Zhao and Yifan Xie and Junhao Gong and Yue Sun and Kai Zhu and Weihua He and Shoujie Li and Haohuan Fu and Wenbo Ding},
   booktitle = {IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS)},
-  year      = {2026}
+  year      = {2026},
+  eprint    = {2606.20426},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.RO},
+  url       = {https://arxiv.org/abs/2606.20426}
 }
 
 @article{nguyen2024tacex,
