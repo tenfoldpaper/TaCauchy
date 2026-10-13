@@ -38,6 +38,7 @@ if [[ ! -d "${MUDA_DIR}/.git" && ! -f "${MUDA_DIR}/.git" ]]; then
 fi
 
 apply_patch_file "${LIBUIPC_DIR}" "${ROOT_DIR}/patches/libuipc-tacauchy.patch" "libuipc patch"
+apply_patch_file "${LIBUIPC_DIR}" "${ROOT_DIR}/patches/libuipc-vcpkg-dependencies.patch" "libuipc_vcpkg_dependencies patch"
 apply_patch_file "${MUDA_DIR}" "${ROOT_DIR}/patches/muda-tacauchy.patch" "muda patch"
 
 echo "[TaCauchy] libuipc patches are ready. You can now build with: pip install -e source/tacex_uipc -v"

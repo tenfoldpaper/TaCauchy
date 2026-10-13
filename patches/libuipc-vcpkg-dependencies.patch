@@ -1,0 +1,41 @@
+diff --git a/scripts/gen_vcpkg_json.py b/scripts/gen_vcpkg_json.py
+index cf2fd507..28e99cbb 100644
+--- a/scripts/gen_vcpkg_json.py
++++ b/scripts/gen_vcpkg_json.py
+@@ -2,7 +2,7 @@ import json
+ import argparse
+ import os
+ 
+-VCPKG_BASE_LINE = 'b2cb0da531c2f1f740045bfe7c4dac59f0b2b69c'
++VCPKG_BASE_LINE = 'e456309491fd875487bf02b8a0dca76c1b1b00cc'
+ VCPKG_TAG = '2024.11.16' 
+ 
+ base_vcpkg_json = {
+@@ -66,16 +66,17 @@ base_vcpkg_json = {
+     ],
+     
+     'overrides':[
+-        # fix fmt version
+-        {
+-            'name': 'fmt',
+-            'version': '10.2.1',
+-        },
+-        # fix spdlog version
+-        {
+-            'name': 'spdlog',
+-            'version': '1.12.0',
+-        }
++        {"name": "fmt", "version": "10.2.1"},
++        {"name": "spdlog", "version": "1.12.0"},
++        {"name": "dylib", "version": "2.2.1"},
++        {"name": "nlohmann-json", "version": "3.11.3#1"},
++        {"name": "eigen3", "version": "3.4.0#4"},
++        {"name": "catch2", "version": "3.7.1"},
++        {"name": "cppitertools", "version": "2.1#3"},
++        {"name": "cpptrace", "version": "0.8.3"},
++        {"name": "libigl", "version": "2.5.0#2"},
++        {"name": "magic-enum", "version": "0.9.6#1"},
++        {"name": "tbb", "version": "2022.0.0"},
+     ]
+ }
+ 

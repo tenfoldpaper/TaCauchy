@@ -73,6 +73,10 @@ class CMakeBuild(build_ext):
             "-DCMAKE_LIBRARY_OUTPUT_DIRECTORY=" + extdir,
             "-DCMAKE_EXPORT_COMPILE_COMMANDS=1",
             "-DCMAKE_COLOR_DIAGNOSTICS=1",
+            f"-DPython_EXECUTABLE={sys.executable}",
+            f"-DPython3_EXECUTABLE={sys.executable}",
+            f"-DUIPC_PYTHON_EXECUTABLE_PATH={sys.executable}",
+            "-DCMAKE_MAKE_PROGRAM=/usr/bin/ninja",
             "-DUIPC_BUILD_PYBIND=" + self.DUIPC_BUILD_PYBIND,  # per default = 1, i.e. true
             "-DUIPC_DEV_MODE=1",
             "-DUIPC_BUILD_GUI=0",
